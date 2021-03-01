@@ -1,0 +1,12 @@
+@import "../../css-variables.scss";
+
+.filter-panel {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: $FILTER_PANEL_WIDTH;
+  height: 465px;
+  // margin: 30px 0 145px;
+  overflow: scroll;
+  background-color: #fff;
+}

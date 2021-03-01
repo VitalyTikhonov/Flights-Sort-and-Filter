@@ -1,8 +1,10 @@
-import './App.css';
+import './App.scss';
+import FilterPanel from './components/FilterPanel/FilterPanel';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
+      <FilterPanel />
     </div>
   );
 }
