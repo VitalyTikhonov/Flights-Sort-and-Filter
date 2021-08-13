@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: black;
 }
 
 code {
@@ -14,6 +15,6 @@ code {
 
 /* Dev mode shadow highlighting */
 
-* {
-  box-shadow: 0 0 0 1px green;
-}
+// * {
+//   box-shadow: 0 0 0 1px green;
+// }
