@@ -1,2 +1,23 @@
-$PAGE_WIDTH: 963px;
-$FILTER_PANEL_WIDTH: calc(#{$PAGE_WIDTH} * .2648)
+$WIDTH_PAGE: 963px;
+$WIDTH_SEARCH_RESULTS: $WIDTH_PAGE * 0.7352;
+$WIDTH-FILTER: $WIDTH_PAGE - $WIDTH_SEARCH_RESULTS;
+$FONT_COLOR_BLUE: #0087c9;
+$FONT_COLOR_ORANGE: #ff8e1d;
+$BACKGROUND_COLOR_ORANGE: #ffb168;
+
+@mixin strikeThrough {
+  // content: "";
+  // display: block;
+  // width: auto;
+  // // width: $WIDTH_PAGE * 0.2212;
+  // height: 1px;
+  // background: #A2A2A2;
+  // top: 50%;
+  // position: absolute;
+
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #a2a2a2;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+}

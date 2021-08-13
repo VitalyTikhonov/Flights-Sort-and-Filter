@@ -1,3 +1,4 @@
+import './Flight.scss';
 import Leg from '../Leg/Leg';
 
 const currencySymbolMap = {
@@ -26,6 +27,8 @@ function Flight({ data }) {
       <ul className="flight__leg-list" >
         {legs.map((leg, index) => <Leg data={leg} key={index} />)}
       </ul>
+
+      <button className="flight__button" >ВЫБРАТЬ</button>
     </article>
   );
 }

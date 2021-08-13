@@ -1,3 +1,4 @@
+import './Leg.scss';
 import { matchNumInNominativeCase, getDateAndTime, getDurationString, getCityString, getAirlineString } from '../../utils.js';
 
 function Leg({ data }) { // leg.segments
@@ -21,21 +22,21 @@ function Leg({ data }) { // leg.segments
     <div className="leg" >
       <h3 className="leg__header" >
         <span className="leg__city" >
-          {getCityString(departureCity, departureAirport)} <span className="leg__airport-code" >{departureAirport.uid}</span>
+          {getCityString(departureCity, departureAirport)}, {departureAirport.caption} <span className="leg__airport-code" >({departureAirport.uid}) </span>
         </span>
 
         <span className="leg__city" >
-          {getCityString(arrivalCity, arrivalAirport)} <span className="leg__airport-code" >{arrivalAirport.uid}</span>
+          {getCityString(arrivalCity, arrivalAirport)}, {arrivalAirport.caption} <span className="leg__airport-code" >({arrivalAirport.uid}) </span>
         </span>
       </h3>
 
       <div className="leg__date-time" >
-        <span className="leg__time" >{departureDT.time}<span className="leg__date" >{departureDT.date} {departureDT.weekday}</span></span>
+        <span className="leg__time" >{departureDT.time} <span className="leg__date" >{departureDT.date} {departureDT.weekday}</span></span>
         <span className="leg__duration" >{durationString}</span>
-        <span className="leg__time" >{arrivalDT.time}<span className="leg__date" >{arrivalDT.date} {arrivalDT.weekday}</span></span>
+        <span className="leg__time" ><span className="leg__date" >{arrivalDT.date} {arrivalDT.weekday}</span> {arrivalDT.time}</span>
       </div>
 
-      <span className="leg__change-number" >{matchNumInNominativeCase(data.segments.length - 1)}</span>
+      <span className="leg__change-number" ><span className="leg__change-number-text" >{matchNumInNominativeCase(data.segments.length - 1)}</span></span>
 
       <span className="leg__airline" >{airlineString}</span>
     </div>

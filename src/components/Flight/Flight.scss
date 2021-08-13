@@ -1,0 +1,47 @@
+@import "../../css-variables.scss";
+
+.flight {
+  padding-bottom: 28px;
+}
+
+.flight__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 8px 16px 6px 13px;
+  background-color: #0087C9;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.flight__airline-logo {
+  margin-top: 4px;
+}
+
+.flight__price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.flight__price-tag {
+  font-weight: bold;
+}
+
+.flight__price-caption {
+  font-size: 10px;
+}
+
+.flight__leg-list {
+
+}
+
+.flight__button {
+  width: 100%;
+  padding: 10px;
+  font-size: 17px;
+  border: none;
+  background-color: $BACKGROUND_COLOR_ORANGE;
+  color: #ffffff;
+}

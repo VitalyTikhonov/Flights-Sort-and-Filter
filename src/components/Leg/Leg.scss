@@ -1,0 +1,80 @@
+@import "../../css-variables.scss";
+
+.leg {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 12px;
+  border-bottom: 2px solid #0084C5;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.leg__header {
+  margin: 0;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.leg__city {
+}
+
+.leg__airport-code {
+}
+
+.leg__city {
+  &:first-of-type::after {
+    content: "\00A0\2192\00A0";
+    color: $FONT_COLOR_BLUE;
+  }
+}
+
+.leg__airport-code {
+  color: $FONT_COLOR_BLUE;
+}
+
+.leg__date-time {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 15px;
+}
+
+.leg__time {
+}
+
+.leg__date {
+  color: $FONT_COLOR_BLUE;
+}
+
+.leg__duration {
+}
+
+.leg__time {
+}
+
+.leg__date {
+}
+
+.leg__change-number {
+  @include strikeThrough;
+}
+
+.leg__change-number-text {
+  position: relative;
+  text-align: center;
+  font-size: 15px;
+  color: $FONT_COLOR_ORANGE;
+  background: #fff;
+
+  &:not(:empty)::before, &:not(:empty)::after {
+    content: "\00A0";
+  }
+}
+
+.leg__airline {
+  font-size: 15px;
+}

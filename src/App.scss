@@ -1,9 +1,23 @@
 @import "./css-variables.scss";
 
 .app {
-  position: relative;
-  max-width: $PAGE_WIDTH;
+  display: flex;
+  flex-direction: row;
+  width: $WIDTH_PAGE;
   margin: 0 auto;
   background-color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.app__left-column {
+  position: relative;
+  width: $WIDTH-FILTER;
+  max-height: 638px;
+  background-color: #D9D9D9;
+}
+
+.results {
+  width: $WIDTH_SEARCH_RESULTS;
+  margin: 20px 4.67vw auto 20px;
 }
 

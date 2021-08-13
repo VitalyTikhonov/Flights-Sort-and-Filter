@@ -10,10 +10,14 @@ const { flights } = result;
 function App() {
   return (
     <div className="app">
-      <FilterPanel />
+      <div className="app__left-column" >
+        <FilterPanel />
+      </div>
 
       <section className="results" >
         {flights.map((flight, index) => <Flight data={flight} key={index} />)}
+
+        <button className="results__button" >Показать еще</button>
       </section>
     </div>
   );
