@@ -19,7 +19,7 @@ function Leg({ data }) { // leg.segments
   const airlineString = getAirlineString(data.segments.map((segment) => segment.airline))
 
   return (
-    <div className="leg" >
+    <li className="leg" >
       <h3 className="leg__header" >
         <span className="leg__city" >
           {getCityString(departureCity, departureAirport)}, {departureAirport.caption} <span className="leg__airport-code" >({departureAirport.uid}) </span>
@@ -39,7 +39,7 @@ function Leg({ data }) { // leg.segments
       <span className="leg__change-number" ><span className="leg__change-number-text" >{matchNumInNominativeCase(data.segments.length - 1)}</span></span>
 
       <span className="leg__airline" >{airlineString}</span>
-    </div>
+    </li>
   )
 }
 

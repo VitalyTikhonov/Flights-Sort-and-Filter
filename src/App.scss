@@ -7,36 +7,38 @@
   margin: 0 auto;
   background-color: #fff;
   font-family: Arial, sans-serif;
-}
-
-.filter {
-  position: relative;
-  width: $WIDTH-FILTER;
-  max-height: 638px;
-  background-color: #D9D9D9;
+  box-sizing: border-box;
+  height: 100%;
 }
 
 .results {
-  width: $WIDTH_SEARCH_RESULTS;
   overflow: hidden;
+  padding: 20px 45px 20px 23px;
+  height: 100%;
+  flex-grow: 1;
 }
 
 .results__view-area {
-  position: relative;
   width: 100%;
-  height: 100vh;
-  overflow-y: scroll;
-  margin: 20px 4.67vw auto 20px;
+  height: 87.4vh;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .results__button-background {
-  position: sticky;
-  bottom: 0;
-  left: 50%;
   width: 100%;
-  height: 10vh;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #fff;
+  padding: 28px 0;
 }
 
 .results__button {
+  width: 255px;
+  height: 31px;
+  border: 1px solid #575454;
+  color: #1C1C1C;
+  font-size: 15px;
 }

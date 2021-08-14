@@ -22,9 +22,7 @@ function App() {
 
   return (
     <div className="app">
-      <div className="filter" >
-        <FilterPanel />
-      </div>
+      <FilterPanel />
 
       <section className="results" >
         <div className="results__view-area" >
