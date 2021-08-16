@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 import Flight from './components/Flight/Flight';
 import FilterPanel from './components/FilterPanel/FilterPanel';
-
-import { result } from './data/flights.json';
-
-const { flights } = result;
+import { useDispatch, useSelector } from "react-redux";
+import { setFlights, selectFlights } from './app/flightsSlice';
 
 function App() {
-  const [sortedIndices, setSortedIndices] = useState(flights.map((_, i) => i));
+  const dispatch = useDispatch();
+  const flights = useSelector(selectFlights);
+  const [sortedIndices, setSortedIndices] = useState([]);
   const incrementSize = 2;
-  const [renderedIndices, setRenderedIndices] = useState(sortedIndices.slice(0, incrementSize));
+  const [renderedIndices, setRenderedIndices] = useState([]);
 
   function renderMore() {
     if (sortedIndices.length - renderedIndices.length >= incrementSize) {
@@ -19,6 +19,10 @@ function App() {
       setRenderedIndices(sortedIndices)
     }
   }
+
+  useEffect(() => dispatch(setFlights()), [dispatch]);
+  useEffect(() => setSortedIndices(flights.map((_, i) => i)), [flights, dispatch]);
+  useEffect(() => setRenderedIndices(sortedIndices.slice(0, incrementSize)), [sortedIndices, dispatch]);
 
   return (
     <div className="app">

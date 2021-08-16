@@ -1,6 +1,11 @@
+import React from 'react';
 import './FilterPanel.scss';
+import { useSelector } from "react-redux";
+import { selectAirlines } from '../../app/flightsSlice';
 
 function FilterPanel() {
+  const airlines = useSelector(selectAirlines);
+
   return (
     <div className="filter" >
       <form className="filter__panel" >
@@ -54,10 +59,12 @@ function FilterPanel() {
         <fieldset className="filter__group" >
           <legend className="filter__group-caption" >Авиакомпании</legend>
 
-          {/* <label htmlFor={ } className="filter__label" >
-            <input type="checkbox" className="filter__field" id={ } name="filter-option" />
-            &ndash; { }
-          </label> */}
+          {airlines && airlines.map((item) => (
+            <label htmlFor={item.uid} className="filter__label" key={item.uid} >
+              <input type="checkbox" className="filter__field" id={item.uid} name="filter-option" />
+              &ndash; {item.caption}
+            </label>
+          ))}
         </fieldset>
       </form>
     </div>

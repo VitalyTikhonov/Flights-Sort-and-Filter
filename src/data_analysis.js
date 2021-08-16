@@ -141,26 +141,29 @@ let firstSegmentsWithoutDepartureCity = 0; // 3
 let secondSegmentsWithoutDepartureCity = 0; // 0
 
 // 5 двухсегментных направлений не имеют arrivalCity
-multisegmentLegs.forEach((leg) => {
-  if (typeof leg[0].departureCity == 'undefined') {
-    // firstSegmentsWithoutDepartureCity++;
-    // console.log('City', leg[0].departureCity)
-    console.log("ОТКУДА", leg[0].departureAirport)
-    console.log("КУДА", leg[0].arrivalAirport, 'City', leg[0].arrivalCity)
-    console.log('------------------------------')
-    console.log("ОТКУДА", leg[1].departureAirport, 'City', leg[1].departureCity)
-    console.log('КУДА', leg[1].arrivalAirport, 'City', leg[1].arrivalCity)
-    console.log('============================')
-  }
-  // if (typeof leg[1].departureCity == 'undefined') {
-  //   secondSegmentsWithoutDepartureCity++;
-    // console.log('leg[0].departureCity', leg[0].departureCity)
-    // console.log('leg[0].arrivalCity', leg[0].arrivalCity)
-    // console.log('leg[1].departureCity', leg[1].departureCity)
-    // console.log('leg[1].arrivalAirport.match()', leg[1].arrivalAirport.caption.match(/(\W+),/)[1])
-  // }
-})
+// multisegmentLegs.forEach((leg) => {
+//   if (typeof leg[0].departureCity == 'undefined') {
+//     // firstSegmentsWithoutDepartureCity++;
+//     // console.log('City', leg[0].departureCity)
+//     console.log("ОТКУДА", leg[0].departureAirport)
+//     console.log("КУДА", leg[0].arrivalAirport, 'City', leg[0].arrivalCity)
+//     console.log('------------------------------')
+//     console.log("ОТКУДА", leg[1].departureAirport, 'City', leg[1].departureCity)
+//     console.log('КУДА', leg[1].arrivalAirport, 'City', leg[1].arrivalCity)
+//     console.log('============================')
+//   }
+//   // if (typeof leg[1].departureCity == 'undefined') {
+//   //   secondSegmentsWithoutDepartureCity++;
+//     // console.log('leg[0].departureCity', leg[0].departureCity)
+//     // console.log('leg[0].arrivalCity', leg[0].arrivalCity)
+//     // console.log('leg[1].departureCity', leg[1].departureCity)
+//     // console.log('leg[1].arrivalAirport.match()', leg[1].arrivalAirport.caption.match(/(\W+),/)[1])
+//   // }
+// })
 
 // console.log('multisegmentLegs.length', multisegmentLegs.length)
 // console.log('firstSegmentsWithoutDepartureCity', firstSegmentsWithoutDepartureCity)
 // console.log('secondSegmentsWithoutDepartureCity', secondSegmentsWithoutDepartureCity)
+
+// console.log(segments[0])
+// console.log(segments[1])

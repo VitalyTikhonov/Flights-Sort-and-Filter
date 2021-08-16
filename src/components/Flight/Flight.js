@@ -1,3 +1,4 @@
+import React from 'react';
 import './Flight.scss';
 import Leg from '../Leg/Leg';
 

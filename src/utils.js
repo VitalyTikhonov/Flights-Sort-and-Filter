@@ -84,5 +84,5 @@ export function getAirlineString(airlines) {
 }
 
 export function getCityString(city, airport) {
-  return typeof city != 'undefined' ? city.caption : airport.caption.match(/(\W+),/)[1];
+  return typeof city !== 'undefined' ? city.caption : airport.caption.match(/(\W+),/)[1];
 }

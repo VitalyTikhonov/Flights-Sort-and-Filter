@@ -1,3 +1,4 @@
+import React from 'react';
 import './Leg.scss';
 import { matchNumInNominativeCase, getDateAndTime, getDurationString, getCityString, getAirlineString } from '../../utils.js';
 
