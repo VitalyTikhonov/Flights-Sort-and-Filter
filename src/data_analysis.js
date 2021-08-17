@@ -58,7 +58,7 @@ legs.forEach((leg) => segments.push(...leg))
   'starting',
 ] */
 
-const multisegmentLegs = legs.filter((leg) => leg.length === 2)
+// const multisegmentLegs = legs.filter((leg) => leg.length === 2)
 
 // console.log(multisegmentLegs.every((leg) => {
 //   const date1 = new Date(leg[0].departureDate);
@@ -127,18 +127,18 @@ const monosegmentLegs = legs.filter((leg) => leg.length === 1)
 // let secondSegmentsWithoutArrivalCity = 0;
 
 // 5 двухсегментных направлений не имеют arrivalCity
-multisegmentLegs.forEach((leg) => {
-  if (typeof leg[1].arrivalCity == 'undefined') {
+// multisegmentLegs.forEach((leg) => {
+//   if (typeof leg[1].arrivalCity == 'undefined') {
     // secondSegmentsWithoutArrivalCity++;
     // console.log('leg[0].departureCity', leg[0].departureCity)
     // console.log('leg[0].arrivalCity', leg[0].arrivalCity)
     // console.log('leg[1].departureCity', leg[1].departureCity)
     // console.log('leg[1].arrivalAirport.match()', leg[1].arrivalAirport.caption.match(/(\W+),/)[1])
-  }
-})
+//   }
+// })
 
-let firstSegmentsWithoutDepartureCity = 0; // 3
-let secondSegmentsWithoutDepartureCity = 0; // 0
+// let firstSegmentsWithoutDepartureCity = 0; // 3
+// let secondSegmentsWithoutDepartureCity = 0; // 0
 
 // 5 двухсегментных направлений не имеют arrivalCity
 // multisegmentLegs.forEach((leg) => {
@@ -167,3 +167,21 @@ let secondSegmentsWithoutDepartureCity = 0; // 0
 
 // console.log(segments[0])
 // console.log(segments[1])
+
+// const res = flights.every((data) => {
+//   const { flight: { price } } = data;
+//   const adultPrice = price.passengerPrices.find((item) => item.passengerType.uid === "ADULT").singlePassengerTotal.amount;
+  // const adultPrice = parseInt(price.passengerPrices.find((item) => item.passengerType.uid === "ADULT").singlePassengerTotal.amount, 10);
+  // const totalPrice = parseInt(price.total.amount, 10);
+  // return adultPrice === totalPrice
+  // return /\d+\.00/.test(adultPrice)
+// })
+
+// console.log('res', res)
+
+for (let i = 0; i < 9; i++) {
+  // const adultPrice = parseInt(flights[i].flight.price.passengerPrices.find((item) => item.passengerType.uid === "ADULT").singlePassengerTotal.amount, 10);
+  const adultPrice = Number(flights[i].flight.price.passengerPrices.find((item) => item.passengerType.uid === "ADULT").singlePassengerTotal.amount);
+  console.log(adultPrice)
+}
+

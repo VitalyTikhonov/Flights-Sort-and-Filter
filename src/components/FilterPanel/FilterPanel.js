@@ -3,58 +3,61 @@ import './FilterPanel.scss';
 import { useSelector } from "react-redux";
 import { selectAirlines } from '../../app/flightsSlice';
 
-function FilterPanel({ sortFunction }) {
+function FilterPanel({ filterAndSort }) {
   const airlines = useSelector(selectAirlines);
 
-  function sortData(e) {
-    sortFunction(e.target.id);
-    console.log({id: e.target.id})
-    // switch (e.target.id) {
-    //   case price-ascending:
-    //     sortFunction
-      // case price-descending
-      // case duration
-    // }
-
+  function handleChange({ currentTarget, target }) {
+    // console.log(currentTarget.type, 'target.type', target.type);
+    // console.log(currentTarget.name, currentTarget.id, target.id, target.value);
+    // console.log('target.checked', target.checked);
+    filterAndSort({
+      fieldSetName: currentTarget.name,
+      fieldSetId: currentTarget.id,
+      fieldId: target.id,
+      fieldType: target.type,
+      fieldChecked: target.checked,
+      fieldValue: parseInt(target.dataset['changeNumber'], 10) || target.value,
+      // fieldValue: target.value !== "on" ? target.value : parseInt(target.dataset['changeNumber'], 10),
+    });
   }
 
   return (
     <div className="filter" >
       <form className="filter__panel" >
-        <fieldset className="filter__group" >
+        <fieldset className="filter__group" name="sort" onChange={handleChange} >
           <legend className="filter__group-caption" >Сортировать</legend>
 
           <label htmlFor="price-ascending" className="filter__label" >
-            <input onChange={sortData} type="radio" className="filter__field" id="price-ascending" name="sort-option" />
+            <input type="radio" className="filter__field" id="price-ascending" name="sort-option" />
             &ndash; по возрастанию цены
           </label>
 
           <label htmlFor="price-descending" className="filter__label" >
-            <input onChange={sortData} type="radio" className="filter__field" id="price-descending" name="sort-option" />
+            <input type="radio" className="filter__field" id="price-descending" name="sort-option" />
             &ndash; по убыванию цены
           </label>
 
           <label htmlFor="duration" className="filter__label" >
-            <input onChange={sortData} type="radio" className="filter__field" id="duration" name="sort-option" />
+            <input type="radio" className="filter__field" id="duration" name="sort-option" />
             &ndash; по времени в пути
           </label>
         </fieldset>
 
-        <fieldset className="filter__group" >
+        <fieldset className="filter__group" id="changes" name="filter" onChange={handleChange} >
           <legend className="filter__group-caption" >Фильтровать</legend>
 
-          <label htmlFor="single-change" className="filter__label" >
-            <input type="checkbox" className="filter__field" id="single-change" name="filter-option" />
+          <label htmlFor="changes1" className="filter__label" >
+            <input type="checkbox" className="filter__field" id="changes1" name="filter-option" data-change-number="1" />
             &ndash; 1 пересадка
           </label>
 
-          <label htmlFor="no-changes" className="filter__label" >
-            <input type="checkbox" className="filter__field" id="no-changes" name="filter-option" />
+          <label htmlFor="changes0" className="filter__label" >
+            <input type="checkbox" className="filter__field" id="changes0" name="filter-option" data-change-number="0" />
             &ndash; без пересадок
           </label>
         </fieldset>
 
-        <fieldset className="filter__group" >
+        <fieldset className="filter__group" id="price" name="filter" onChange={handleChange} >
           <legend className="filter__group-caption" >Цена</legend>
 
           <label htmlFor="minimum" className="filter__label filter__label_price" >
@@ -68,7 +71,7 @@ function FilterPanel({ sortFunction }) {
           </label>
         </fieldset>
 
-        <fieldset className="filter__group" >
+        <fieldset className="filter__group" id="airlines" name="filter" onChange={handleChange} >
           <legend className="filter__group-caption" >Авиакомпании</legend>
 
           {airlines && airlines.map((item) => (

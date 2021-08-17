@@ -11,7 +11,7 @@ function Flight({ data }) {
   const { flight: { carrier, price, legs } } = data;
 
   const adultPrice = price.passengerPrices.find((item) => item.passengerType.uid === "ADULT").singlePassengerTotal;
-  const adultPriceFigure = adultPrice.amount;
+  const adultPriceFigure = parseInt(adultPrice.amount, 10);
   const adultPriceCurrency = currencySymbolMap[adultPrice.currencyCode];
 
   return (

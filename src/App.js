@@ -9,45 +9,121 @@ function App() {
   const dispatch = useDispatch();
   const flights = useSelector(selectFlights);
   const [sortedIndices, setSortedIndices] = useState([]);
-  const [numOfRendered, setNumOfRendered] = useState(2);
+  const increment = 2;
+  const [numOfRendered, setNumOfRendered] = useState(increment);
   const [renderedIndices, setRenderedIndices] = useState([]);
+  const [sortCriterion, setSortCriterion] = useState(null);
+  const [filterCriteria, setFilterCriteria] = useState({ changes: {}, price: {}, airlines: {} });
 
   function renderMore() {
-    if (sortedIndices.length - renderedIndices.length >= numOfRendered) {
-      const newNumOfRendered = renderedIndices.length + numOfRendered;
-      setRenderedIndices(sortedIndices.slice(0, renderedIndices.length + numOfRendered))
-      setNumOfRendered(newNumOfRendered)
-    } else {
-      setRenderedIndices(sortedIndices)
-      setNumOfRendered(sortedIndices)
-    }
+    const newNumOfRendered = Math.min(numOfRendered + increment, sortedIndices.length); // если всего 11, то индексы 0-10; мин(2 + 2, 11) = 4, затем 6, 8, 10, 11...
+    setRenderedIndices(sortedIndices.slice(0, newNumOfRendered)) // ...и включ с 0 по 3, затем 0-5, 0-7, 0-9, 0-10
+    setNumOfRendered(newNumOfRendered)
   }
 
-  function sortFlights(option) {
+  function filterAndSort({ fieldSetName, fieldSetId, fieldId, fieldType, fieldChecked, fieldValue }) {
     const newSortedIndices = [...sortedIndices];
-    switch (option) {
-      case "price-ascending":
-        setSortedIndices(newSortedIndices.sort((a, b) => flights[a].flight.price.total.amount - flights[b].flight.price.total.amount));
+    switch (fieldSetName) {
+      case "sort":
+        switch (fieldId) {
+          case "price-ascending":
+            setSortedIndices(newSortedIndices.sort((a, b) => flights[a].flight.price.total.amount - flights[b].flight.price.total.amount));
+            break;
+          case "price-descending":
+            setSortedIndices(newSortedIndices.sort((a, b) => flights[b].flight.price.total.amount - flights[a].flight.price.total.amount));
+            break;
+          case "duration":
+            setSortedIndices(newSortedIndices.sort((a, b) => flights[a].duration - flights[b].duration));
+            break;
+          default:
+            break;
+        }
+        setSortCriterion(fieldId)
         break;
-      case "price-descending":
-        setSortedIndices(newSortedIndices.sort((a, b) => flights[b].flight.price.total.amount - flights[a].flight.price.total.amount));
-        break;
-      case "duration":
-        setSortedIndices(newSortedIndices.sort((a, b) => flights[a].duration - flights[b].duration));
+
+      case "filter":
+        const newFilterCriteria = { ...filterCriteria };
+        newFilterCriteria[fieldSetId] = { ...filterCriteria[fieldSetId], [fieldId]: fieldValue };
+
+        // console.log('fieldValue', fieldValue)
+        /* Удалять поля, если */
+
+        /* неотмеченный чекбокс */
+        const a = fieldType === 'checkbox';
+        const b = !fieldChecked;
+
+        /* пустое поле (falsy) или [поля нет; но возможно ложное true: мы подставляем для одного из полей цифру, и это мб 0] */
+        const c = !fieldValue;
+        const d = fieldValue !== 0;
+        // console.log({a,b,c,d})
+
+        if ((a && b) || (c && d)) {
+          // console.log("deleting field")
+          // if ((fieldType === 'checkbox' && !fieldChecked) || (fieldValue !== 0 && !fieldValue )) {
+          delete newFilterCriteria[fieldSetId][fieldId];
+        }
+
+        console.log("EVERY", flights.every((item) => {
+          const itemPrice = parseInt(item.flight.price.total.amount, 10);
+          // return newFilterCriteria.price.minimum;
+          return itemPrice >= parseInt(newFilterCriteria.price.minimum, 10)
+
+        }))
+
+        setSortedIndices(flights.reduce((result, item, index) => {
+          const itemPrice = parseInt(item.flight.price.total.amount, 10);
+          // (Object.keys(newFilterCriteria.changes).length === 0) || (Object.values(newFilterCriteria.changes).includes(item.numOfChanges)) && console.log('1 true');
+          // console.log('itemPrice', itemPrice);
+          // console.log('newFilterCriteria.price.minimum', newFilterCriteria.price.minimum);
+          // (!newFilterCriteria.price.minimum || itemPrice >= newFilterCriteria.price.minimum) && console.log('2.1 true');
+          // (!newFilterCriteria.price.maximum || itemPrice <= newFilterCriteria.price.maximum) && console.log('2.2 true');
+          // console.log('2.1.1', !newFilterCriteria.price.minimum, itemPrice);
+          // console.log('2.1.2', itemPrice >= parseInt(newFilterCriteria.price.minimum, 10), itemPrice);
+          // (!newFilterCriteria.price.maximum || itemPrice <= parseInt(newFilterCriteria.price.maximum, 10)) && console.log('2.2 true');
+          // (itemPrice >= newFilterCriteria.price.minimum) && console.log('2 true');
+          // (Object.keys(newFilterCriteria.airlines).length === 0 || Object.keys(newFilterCriteria.airlines).includes(item.flight.carrier.uid)) && console.log('3 true');
+
+          if (
+            (Object.keys(newFilterCriteria.changes).length === 0 || Object.values(newFilterCriteria.changes).includes(item.numOfChanges)) &&
+            (!newFilterCriteria.price.minimum || itemPrice >= parseInt(newFilterCriteria.price.minimum, 10)) &&
+            (!newFilterCriteria.price.maximum || itemPrice <= parseInt(newFilterCriteria.price.maximum, 10)) &&
+            (Object.keys(newFilterCriteria.airlines).length === 0 || Object.keys(newFilterCriteria.airlines).includes(item.flight.carrier.uid))
+          ) {
+            result.push(index);
+          }
+          return result;
+          // result.push(sortedIndices[index]);
+          // return result;
+        }, []));
+
+        sortCriterion && filterAndSort({ fieldSetName: 'sort', fieldId: sortCriterion })
+
+        setFilterCriteria(newFilterCriteria);
         break;
       default:
+        break;
     }
-
   }
 
   useEffect(() => dispatch(setFlights()), [dispatch]);
   useEffect(() => setSortedIndices(flights.map((_, i) => i)), [flights, dispatch]);
   useEffect(() => setRenderedIndices(sortedIndices.slice(0, numOfRendered)), [sortedIndices, dispatch]);
-  useEffect(() => console.log('renderedIndices', renderedIndices), [renderedIndices]);
+
+  // useEffect(() => console.log('sortCriterion', sortCriterion), [sortCriterion]);
+
+  useEffect(() => {
+    console.log('filterCriteria.price', filterCriteria.price)
+    // console.log('Object.values(filterCriteria.changes)', Object.values(filterCriteria.changes))
+    // console.log('Object.values(filterCriteria.price)', Object.values(filterCriteria.price))
+    // console.log('Object.values(filterCriteria.airlines)', Object.values(filterCriteria.airlines))
+  }, [filterCriteria]);
+
+  useEffect(() => console.log('sortedIndices.length', sortedIndices.length), [sortedIndices]);
+  // useEffect(() => console.log('renderedIndices', renderedIndices), [renderedIndices]);
 
   return (
     <div className="app">
-      <FilterPanel sortFunction={sortFlights} />
+      <FilterPanel filterAndSort={filterAndSort} />
 
       <section className="results" >
         <div className="results__view-area" >
@@ -55,7 +131,7 @@ function App() {
         </div>
 
         <div className="results__button-background" >
-          <button className="results__button button" onClick={renderMore} >Показать еще</button>
+          {numOfRendered < sortedIndices.length && <button className="results__button button" onClick={renderMore} >Показать еще</button>}
         </div>
       </section>
     </div>
