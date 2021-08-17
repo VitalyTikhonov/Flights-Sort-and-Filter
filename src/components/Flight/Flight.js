@@ -29,7 +29,7 @@ function Flight({ data }) {
         {legs.map((leg, index) => <Leg data={leg} key={index} />)}
       </ul>
 
-      <button className="flight__button" >ВЫБРАТЬ</button>
+      <button className="flight__button button" >ВЫБРАТЬ</button>
     </article>
   );
 }

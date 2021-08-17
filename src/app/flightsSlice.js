@@ -13,16 +13,17 @@ export const flightsSlice = createSlice({
   },
   reducers: {
     setFlights: (state) => { // (state, action)
-      state.flightsData = flights;
-      
       let carriers = [];
       flights.forEach((item) => {
+        item.duration = item.flight.legs.reduce((acc, leg) => acc + leg.duration, 0)
+
         const newAirline = item.flight.carrier;
         if (carriers.findIndex((carrier) => carrier.uid === newAirline.uid) === -1) {
           carriers.push(newAirline);
         }
       });
-
+      
+      state.flightsData = flights;
       state.airlines = carriers;
     },
   },

@@ -9,24 +9,45 @@ function App() {
   const dispatch = useDispatch();
   const flights = useSelector(selectFlights);
   const [sortedIndices, setSortedIndices] = useState([]);
-  const incrementSize = 2;
+  const [numOfRendered, setNumOfRendered] = useState(2);
   const [renderedIndices, setRenderedIndices] = useState([]);
 
   function renderMore() {
-    if (sortedIndices.length - renderedIndices.length >= incrementSize) {
-      setRenderedIndices(sortedIndices.slice(0, renderedIndices.length + incrementSize))
+    if (sortedIndices.length - renderedIndices.length >= numOfRendered) {
+      const newNumOfRendered = renderedIndices.length + numOfRendered;
+      setRenderedIndices(sortedIndices.slice(0, renderedIndices.length + numOfRendered))
+      setNumOfRendered(newNumOfRendered)
     } else {
       setRenderedIndices(sortedIndices)
+      setNumOfRendered(sortedIndices)
     }
+  }
+
+  function sortFlights(option) {
+    const newSortedIndices = [...sortedIndices];
+    switch (option) {
+      case "price-ascending":
+        setSortedIndices(newSortedIndices.sort((a, b) => flights[a].flight.price.total.amount - flights[b].flight.price.total.amount));
+        break;
+      case "price-descending":
+        setSortedIndices(newSortedIndices.sort((a, b) => flights[b].flight.price.total.amount - flights[a].flight.price.total.amount));
+        break;
+      case "duration":
+        setSortedIndices(newSortedIndices.sort((a, b) => flights[a].duration - flights[b].duration));
+        break;
+      default:
+    }
+
   }
 
   useEffect(() => dispatch(setFlights()), [dispatch]);
   useEffect(() => setSortedIndices(flights.map((_, i) => i)), [flights, dispatch]);
-  useEffect(() => setRenderedIndices(sortedIndices.slice(0, incrementSize)), [sortedIndices, dispatch]);
+  useEffect(() => setRenderedIndices(sortedIndices.slice(0, numOfRendered)), [sortedIndices, dispatch]);
+  useEffect(() => console.log('renderedIndices', renderedIndices), [renderedIndices]);
 
   return (
     <div className="app">
-      <FilterPanel />
+      <FilterPanel sortFunction={sortFlights} />
 
       <section className="results" >
         <div className="results__view-area" >
@@ -34,7 +55,7 @@ function App() {
         </div>
 
         <div className="results__button-background" >
-          <button className="results__button" onClick={renderMore} >Показать еще</button>
+          <button className="results__button button" onClick={renderMore} >Показать еще</button>
         </div>
       </section>
     </div>
@@ -42,41 +63,3 @@ function App() {
 }
 
 export default App;
-
-/*
-VARIANT A
-
-sortedIndices
-incrementSize
-renderedIndices useState(sortedIndices.slice(0, incrementSize));
-
-renderMore()
-  // sortedIndices.length
-  // renderedIndices.length
-  // incrementSize
-  if (sortedIndices.length - renderedIndices.length >= incrementSize) // добавить к renderedIndices incrementSize
-    setRenderedIndices(sortedIndices.slice(0, renderedIndices.length + incrementSize))
-  else // отрендерить все sortedIndices
-    setRenderedIndices(sortedIndices)
-
-return
-  {renderedIndices.map((index, i) => <Flight data={flights[index]} key={i} />)}
-*/
-
-/*
-VARIANT B
-
-sortedIndices
-incrementSize
-lastRenderedIndex = useState ( incrementSize - 1 )
-
-renderMore
-  const newIndex = lastRenderedIndex + incrementSize;
-  setLastRenderedIndex(newIndex < sortedIndices.length ? newIndex : sortedIndices.length + 1);
-
-return
-  {sortedIndices.map((index, i) => index <= lastRenderedIndex && <Flight data={flights[index]} key={i} />)}
-
-  так map продолжит итерироваться по sortedIndices, сравнивая индексы, до самого конца. Вероятно, вариант А оптимальнее,
-  т. к. в нем рендер не имеет этого недостатка, а renderMore хоть и кажется сложнее, но эта операция выполняется реже, чем рендер
-*/

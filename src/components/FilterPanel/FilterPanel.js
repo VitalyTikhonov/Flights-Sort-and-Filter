@@ -3,8 +3,20 @@ import './FilterPanel.scss';
 import { useSelector } from "react-redux";
 import { selectAirlines } from '../../app/flightsSlice';
 
-function FilterPanel() {
+function FilterPanel({ sortFunction }) {
   const airlines = useSelector(selectAirlines);
+
+  function sortData(e) {
+    sortFunction(e.target.id);
+    console.log({id: e.target.id})
+    // switch (e.target.id) {
+    //   case price-ascending:
+    //     sortFunction
+      // case price-descending
+      // case duration
+    // }
+
+  }
 
   return (
     <div className="filter" >
@@ -13,17 +25,17 @@ function FilterPanel() {
           <legend className="filter__group-caption" >Сортировать</legend>
 
           <label htmlFor="price-ascending" className="filter__label" >
-            <input type="radio" className="filter__field" id="price-ascending" name="sort-option" />
+            <input onChange={sortData} type="radio" className="filter__field" id="price-ascending" name="sort-option" />
             &ndash; по возрастанию цены
           </label>
 
           <label htmlFor="price-descending" className="filter__label" >
-            <input type="radio" className="filter__field" id="price-descending" name="sort-option" />
+            <input onChange={sortData} type="radio" className="filter__field" id="price-descending" name="sort-option" />
             &ndash; по убыванию цены
           </label>
 
           <label htmlFor="duration" className="filter__label" >
-            <input type="radio" className="filter__field" id="duration" name="sort-option" />
+            <input onChange={sortData} type="radio" className="filter__field" id="duration" name="sort-option" />
             &ndash; по времени в пути
           </label>
         </fieldset>

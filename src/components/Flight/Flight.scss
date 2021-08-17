@@ -1,6 +1,9 @@
 @import "../../css-variables.scss";
 
 .flight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-bottom: 28px;
 }
 
@@ -8,6 +11,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
   padding: 8px 16px 6px 13px;
   background-color: #0087C9;
   font-size: 16px;
@@ -40,10 +45,11 @@
 }
 
 .flight__button {
-  width: 100%;
-  padding: 10px;
+  width: calc(100% - 8px);
+  padding: 8px;
   font-size: 17px;
   border: none;
   background-color: $BACKGROUND_COLOR_ORANGE;
+  border: 2px solid $BACKGROUND_COLOR_ORANGE;
   color: #ffffff;
 }

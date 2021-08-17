@@ -13,6 +13,19 @@ code {
     monospace;
 }
 
+.button {
+  transition: opacity 0.1s linear;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:active {
+    border: 2px solid white;
+    outline: black solid 2px;
+  }
+}
+
 /* Dev mode element highlighting */
 
 // * {
