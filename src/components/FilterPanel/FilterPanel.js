@@ -7,13 +7,24 @@ function FilterPanel({ filterAndSort }) {
   const airlines = useSelector(selectAirlines);
 
   function handleChange({ currentTarget, target }) {
+    // console.log(target)
+    // console.log(target.dataset['changeNumber'])
+    // console.log("NOW", parseInt(target.dataset['changeNumber'], 10))
+    let consolidatedValue;
+    const dataAttr = parseInt(target.dataset['changeNumber'], 10);
+    if (dataAttr !== 0 && !dataAttr) {
+      consolidatedValue = target.value
+    } else {
+      consolidatedValue = dataAttr
+    }
+    console.log('consolidatedValue', consolidatedValue)
     filterAndSort({
       fieldSetName: currentTarget.name,
       fieldSetId: currentTarget.id,
       fieldId: target.id,
       fieldType: target.type,
       fieldChecked: target.checked,
-      fieldValue: parseInt(target.dataset['changeNumber'], 10) || target.value,
+      fieldValue: consolidatedValue,
     });
   }
 

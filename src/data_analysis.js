@@ -4,7 +4,6 @@ function getPropByPath(dataItemObj, pathString) {
   let result = { ...dataItemObj }
   const segments = pathString.split(".")
   segments.forEach((segment) => {
-    // console.log('result[segment]', result[segment])
     result = result[segment]
   })
   /* вернуть значение свойства, лежащего в dataItemObj по пути pathString */
@@ -179,9 +178,9 @@ const monosegmentLegs = legs.filter((leg) => leg.length === 1)
 
 // console.log('res', res)
 
-for (let i = 0; i < 9; i++) {
-  // const adultPrice = parseInt(flights[i].flight.price.passengerPrices.find((item) => item.passengerType.uid === "ADULT").singlePassengerTotal.amount, 10);
-  const adultPrice = Number(flights[i].flight.price.passengerPrices.find((item) => item.passengerType.uid === "ADULT").singlePassengerTotal.amount);
-  console.log(adultPrice)
-}
+// for (let i = 0; i < 9; i++) {
+//   // const adultPrice = parseInt(flights[i].flight.price.passengerPrices.find((item) => item.passengerType.uid === "ADULT").singlePassengerTotal.amount, 10);
+//   const adultPrice = Number(flights[i].flight.price.passengerPrices.find((item) => item.passengerType.uid === "ADULT").singlePassengerTotal.amount);
+//   console.log(adultPrice)
+// }
 

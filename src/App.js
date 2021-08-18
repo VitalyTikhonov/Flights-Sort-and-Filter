@@ -82,16 +82,23 @@ function App() {
   useEffect(() => {
     // console.log('sortedIndices', sortedIndices)
     setRenderedIndices(sortedIndices.slice(0, numOfRendered));
+    console.log('numOfChanges', flights.reduce((acc, item) => {
+      if (item.numOfChanges === 0) {
+        acc++
+        console.log('item.flight.price.total.amount', item.flight.price.total.amount)
+      }
+      return acc
+    }, 0))
   }, [sortedIndices, dispatch]);
 
   // useEffect(() => console.log('sortCriterion', sortCriterion), [sortCriterion]);
 
-  // useEffect(() => {
-  //   console.log('filterCriteria.price', filterCriteria.price)
+  useEffect(() => {
+    // console.log('filterCriteria.price', filterCriteria.price)
     // console.log('Object.values(filterCriteria.changes)', Object.values(filterCriteria.changes))
     // console.log('Object.values(filterCriteria.price)', Object.values(filterCriteria.price))
     // console.log('Object.values(filterCriteria.airlines)', Object.values(filterCriteria.airlines))
-  // }, [filterCriteria]);
+  }, [filterCriteria]);
 
   // useEffect(() => console.log('sortedIndices.length', sortedIndices.length), [sortedIndices]);
   // useEffect(() => console.log('renderedIndices', renderedIndices), [renderedIndices]);
