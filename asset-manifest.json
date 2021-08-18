@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/Flights-Sort-and-Filter/static/css/main.88acb7b5.chunk.css",
+    "main.js": "/Flights-Sort-and-Filter/static/js/main.5f50d10a.chunk.js",
+    "main.js.map": "/Flights-Sort-and-Filter/static/js/main.5f50d10a.chunk.js.map",
+    "runtime-main.js": "/Flights-Sort-and-Filter/static/js/runtime-main.e5a04c33.js",
+    "runtime-main.js.map": "/Flights-Sort-and-Filter/static/js/runtime-main.e5a04c33.js.map",
+    "static/js/2.603de0fc.chunk.js": "/Flights-Sort-and-Filter/static/js/2.603de0fc.chunk.js",
+    "static/js/2.603de0fc.chunk.js.map": "/Flights-Sort-and-Filter/static/js/2.603de0fc.chunk.js.map",
+    "index.html": "/Flights-Sort-and-Filter/index.html",
+    "static/css/main.88acb7b5.chunk.css.map": "/Flights-Sort-and-Filter/static/css/main.88acb7b5.chunk.css.map",
+    "static/js/2.603de0fc.chunk.js.LICENSE.txt": "/Flights-Sort-and-Filter/static/js/2.603de0fc.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e5a04c33.js",
+    "static/js/2.603de0fc.chunk.js",
+    "static/css/main.88acb7b5.chunk.css",
+    "static/js/main.5f50d10a.chunk.js"
+  ]
+}
