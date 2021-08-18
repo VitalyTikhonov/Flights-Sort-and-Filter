@@ -21,10 +21,11 @@ function App() {
     setNumOfRendered(newNumOfRendered)
   }
 
-  function filterAndSort({ fieldSetName, fieldSetId, fieldId, fieldType, fieldChecked, fieldValue }) {
-    const newSortedIndices = [...sortedIndices];
+  function filterAndSort({ fieldSetName, fieldSetId, fieldId, fieldType, fieldChecked, fieldValue, sortedIndicesInput }) {
+    let newSortedIndices;
     switch (fieldSetName) {
       case "sort":
+        newSortedIndices = sortedIndicesInput ? [...sortedIndicesInput] : [...sortedIndices];
         switch (fieldId) {
           case "price-ascending":
             setSortedIndices(newSortedIndices.sort((a, b) => flights[a].flight.price.total.amount - flights[b].flight.price.total.amount));
@@ -44,45 +45,19 @@ function App() {
       case "filter":
         const newFilterCriteria = { ...filterCriteria };
         newFilterCriteria[fieldSetId] = { ...filterCriteria[fieldSetId], [fieldId]: fieldValue };
-
-        // console.log('fieldValue', fieldValue)
         /* Удалять поля, если */
-
         /* неотмеченный чекбокс */
         const a = fieldType === 'checkbox';
         const b = !fieldChecked;
-
         /* пустое поле (falsy) или [поля нет; но возможно ложное true: мы подставляем для одного из полей цифру, и это мб 0] */
         const c = !fieldValue;
         const d = fieldValue !== 0;
-        // console.log({a,b,c,d})
-
         if ((a && b) || (c && d)) {
-          // console.log("deleting field")
-          // if ((fieldType === 'checkbox' && !fieldChecked) || (fieldValue !== 0 && !fieldValue )) {
           delete newFilterCriteria[fieldSetId][fieldId];
         }
 
-        console.log("EVERY", flights.every((item) => {
+        newSortedIndices = flights.reduce((result, item, index) => {
           const itemPrice = parseInt(item.flight.price.total.amount, 10);
-          // return newFilterCriteria.price.minimum;
-          return itemPrice >= parseInt(newFilterCriteria.price.minimum, 10)
-
-        }))
-
-        setSortedIndices(flights.reduce((result, item, index) => {
-          const itemPrice = parseInt(item.flight.price.total.amount, 10);
-          // (Object.keys(newFilterCriteria.changes).length === 0) || (Object.values(newFilterCriteria.changes).includes(item.numOfChanges)) && console.log('1 true');
-          // console.log('itemPrice', itemPrice);
-          // console.log('newFilterCriteria.price.minimum', newFilterCriteria.price.minimum);
-          // (!newFilterCriteria.price.minimum || itemPrice >= newFilterCriteria.price.minimum) && console.log('2.1 true');
-          // (!newFilterCriteria.price.maximum || itemPrice <= newFilterCriteria.price.maximum) && console.log('2.2 true');
-          // console.log('2.1.1', !newFilterCriteria.price.minimum, itemPrice);
-          // console.log('2.1.2', itemPrice >= parseInt(newFilterCriteria.price.minimum, 10), itemPrice);
-          // (!newFilterCriteria.price.maximum || itemPrice <= parseInt(newFilterCriteria.price.maximum, 10)) && console.log('2.2 true');
-          // (itemPrice >= newFilterCriteria.price.minimum) && console.log('2 true');
-          // (Object.keys(newFilterCriteria.airlines).length === 0 || Object.keys(newFilterCriteria.airlines).includes(item.flight.carrier.uid)) && console.log('3 true');
-
           if (
             (Object.keys(newFilterCriteria.changes).length === 0 || Object.values(newFilterCriteria.changes).includes(item.numOfChanges)) &&
             (!newFilterCriteria.price.minimum || itemPrice >= parseInt(newFilterCriteria.price.minimum, 10)) &&
@@ -92,12 +67,9 @@ function App() {
             result.push(index);
           }
           return result;
-          // result.push(sortedIndices[index]);
-          // return result;
-        }, []));
-
-        sortCriterion && filterAndSort({ fieldSetName: 'sort', fieldId: sortCriterion })
-
+        }, []);
+        setSortedIndices(newSortedIndices)
+        sortCriterion && filterAndSort({ fieldSetName: 'sort', fieldId: sortCriterion, sortedIndicesInput: newSortedIndices })
         setFilterCriteria(newFilterCriteria);
         break;
       default:
@@ -107,18 +79,21 @@ function App() {
 
   useEffect(() => dispatch(setFlights()), [dispatch]);
   useEffect(() => setSortedIndices(flights.map((_, i) => i)), [flights, dispatch]);
-  useEffect(() => setRenderedIndices(sortedIndices.slice(0, numOfRendered)), [sortedIndices, dispatch]);
+  useEffect(() => {
+    // console.log('sortedIndices', sortedIndices)
+    setRenderedIndices(sortedIndices.slice(0, numOfRendered));
+  }, [sortedIndices, dispatch]);
 
   // useEffect(() => console.log('sortCriterion', sortCriterion), [sortCriterion]);
 
-  useEffect(() => {
-    console.log('filterCriteria.price', filterCriteria.price)
+  // useEffect(() => {
+  //   console.log('filterCriteria.price', filterCriteria.price)
     // console.log('Object.values(filterCriteria.changes)', Object.values(filterCriteria.changes))
     // console.log('Object.values(filterCriteria.price)', Object.values(filterCriteria.price))
     // console.log('Object.values(filterCriteria.airlines)', Object.values(filterCriteria.airlines))
-  }, [filterCriteria]);
+  // }, [filterCriteria]);
 
-  useEffect(() => console.log('sortedIndices.length', sortedIndices.length), [sortedIndices]);
+  // useEffect(() => console.log('sortedIndices.length', sortedIndices.length), [sortedIndices]);
   // useEffect(() => console.log('renderedIndices', renderedIndices), [renderedIndices]);
 
   return (

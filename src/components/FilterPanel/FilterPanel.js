@@ -7,9 +7,6 @@ function FilterPanel({ filterAndSort }) {
   const airlines = useSelector(selectAirlines);
 
   function handleChange({ currentTarget, target }) {
-    // console.log(currentTarget.type, 'target.type', target.type);
-    // console.log(currentTarget.name, currentTarget.id, target.id, target.value);
-    // console.log('target.checked', target.checked);
     filterAndSort({
       fieldSetName: currentTarget.name,
       fieldSetId: currentTarget.id,
@@ -17,7 +14,6 @@ function FilterPanel({ filterAndSort }) {
       fieldType: target.type,
       fieldChecked: target.checked,
       fieldValue: parseInt(target.dataset['changeNumber'], 10) || target.value,
-      // fieldValue: target.value !== "on" ? target.value : parseInt(target.dataset['changeNumber'], 10),
     });
   }
 
